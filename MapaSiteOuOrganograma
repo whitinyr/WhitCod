@@ -1,0 +1,236 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<!------ Include the above in your HEAD tag ---------->
+<style>
+.tree, .tree ul {
+    margin:0;
+    padding:0;
+    list-style:none
+}
+.tree ul {
+    margin-left:1em;
+    position:relative;
+}
+.tree ul ul {
+    margin-left:.5em
+}
+.tree ul:before {
+    content:"";
+    display:block;
+    width:0;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    border-left:1px solid
+}
+.tree li {
+    margin:0;
+    padding:0 1em;
+    line-height:2em;
+    color:#369;
+    font-weight:700;
+    position:relative;
+    width: 600px;
+}
+.tree ul li:before {
+    content:"";
+    display:block;
+    width:10px;
+    height:0;
+    border-top:1px solid;
+    margin-top:-1px;
+    position:absolute;
+    top:1em;
+    left:0
+}
+.tree ul li:last-child:before {
+    background:#fff;
+    height:auto;
+    top:1em;
+    bottom:0
+}
+.indicator {
+    margin-right:5px;
+}
+.tree li a {
+    text-decoration: none;
+    color:#369;
+}
+.tree li button, .tree li button:active, .tree li button:focus {
+    text-decoration: none;
+    color:#369;
+    border:none;
+    background:transparent;
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+    outline: 0;
+}
+.tree span {
+  display: block;
+  font-size: 12px;
+  z-index:9999;
+  color: red;
+}
+</style>
+<script>
+$(document).ready(function() {
+
+
+$.fn.extend({
+    treed: function (o) {
+      var openedClass = 'fa-minus-circle';
+      var closedClass = 'fa-plus-circle';
+
+      if (typeof o != 'undefined'){
+        if (typeof o.openedClass != 'undefined'){
+        openedClass = o.openedClass;
+        }
+        if (typeof o.closedClass != 'undefined'){
+        closedClass = o.closedClass;
+        }
+      };
+
+        //initialize each of the top levels
+        var tree = $(this);
+        tree.addClass("tree");
+        tree.find('li').has("ul").each(function () {
+            var branch = $(this); //li with children ul
+            branch.prepend("<i class='fas " + closedClass + "'></i>");
+            branch.addClass('branch');
+            branch.on('click', function (e) {
+                if (this == e.target) {
+                    var icon = $(this).children('i:first');
+                    icon.toggleClass(openedClass + " " + closedClass);
+                    $(this).children().children().toggle();
+                }
+            })
+            branch.children().children().toggle();
+        });
+        //fire event from the dynamically added icon
+      tree.find('.branch .indicator').each(function(){
+        $(this).on('click', function () {
+            $(this).closest('li').click();
+        });
+      });
+        //fire event to open branch if the li contains an anchor instead of text
+        tree.find('.branch>a').each(function () {
+            $(this).on('click', function (e) {
+                $(this).closest('li').click();
+                e.preventDefault();
+            });
+        });
+        //fire event to open branch if the li contains a button instead of text
+        tree.find('.branch>button').each(function () {
+            $(this).on('click', function (e) {
+                $(this).closest('li').click();
+                e.preventDefault();
+            });
+        });
+    }
+});
+
+//Initialization of treeviews
+
+$('#tree1').treed();
+});
+</script>
+<div class="container" style="margin-top:30px;">
+    <div class="row">
+        <div class="col-md-4">
+            <ul id="tree1">
+              <li>
+                Plenário
+                  <ul>
+                      <li>Comissões Técnicas Permanentes
+                      <ul>
+                        <li>Comissão Tomada de Contas </li>
+                        <li>Comissão de Ética </li>
+                        <li>Comissão Fundo de Assistência</li>
+                      </ul>
+                      </li>
+                      <li>Diretoria
+                        <ul>
+                          <li>Comissão Assessora Especializada</li>
+                          <li>Superintendente Geral<span>Nome e telefone ou ramal ou link</span>
+                            <ul>
+                              <li>Gabinete da Diretoria</li>
+                                <li>ÁREA DE RECURSOS HUMANOS, FINANCEIRO E CONTÁBIL
+                                  <ul>
+                                  <li>Área Financeiro e Contábil<span>Nome e telefone ou ramal ou link</span></li>
+                                  <li>Negociação e Arrecadação<span> Nome e telefone ou ramal ou link</span></li>
+                                  <li>Dívida Ativa<span>Nome e telefone ou ramal ou link</span></li>
+                                  <li>Gestão de Pessoas<span>(11) 2222-2222</span></li>
+                                  </ul>
+                                </li>
+                                <li>ÁREA DA TECNOLOGIA E SERVIÇO
+                                  <ul>
+                                  <li>Suprimentos, Patrimônio e Serviços<span>Nome e telefone ou ramal ou link</span></li>
+                                  <li>Tecnologia da Informação<span> Nome e telefone ou ramal ou link</span></li>
+                                  <li>Central de Deslocamento<span>Nome e telefone ou ramal ou link</span></li>
+                                  </ul>
+                                </li>
+                                <li>ÁREA JURÍDICA
+                                  <ul>
+                                  <li>Consultoria Jurídica<span>Nome e telefone ou ramal ou link</span></li>
+                                  </ul>
+                                </li>
+                                <li>Gerente Geral<span>Nome e telefone ou ramal ou link</span>
+                                <ul>
+                                  <li>Licitações e Contratos</li>
+                                  <li>ÁREA TÉCNICA
+                                  <ul>
+                                    <li>Apoio Técnico e Educação Permanente<span>Nome e telefone ou ramal ou link</span></li>
+                                    <li>Secretaria dos Delegados<span>Nome e telefone ou ramal ou link</span></li>
+                                  </ul>
+                                </li>
+                                <li>ÁREA DE RELACIONAMENTO
+                                <ul>
+                                  <li>Atendimento<span>Nome e telefone ou ramal ou link</span></li>
+                                  <li>Trâmite de Documentos<span>Nome e telefone ou ramal ou link</span></li>
+                                  <li>Departamento de Eventos<span>Nome e telefone ou ramal ou link</span></li>
+                                  <li>Departamento de Relacionamento<span>Nome e telefone ou ramal ou link</span></li>
+                                  <li>Comunicação<span>Nome e telefone ou ramal ou link</span></li>
+                                </ul>
+                                </li>
+                                <li>ÁREA FISCALIZAÇÃO
+                                  <ul>
+                                    <li>Fiscalização<span>Nome e telefone ou ramal ou link </span>
+                                      <ul>
+                                        <li>Processo Fiscal</li>
+                                        <li>Orientação Farmacêutica</li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li>ÁREA ÉTICA
+                                  <ul>
+                                    <li>Sec. das Comissões de Ética<span>Nome e telefone ou ramal ou link</span></li>
+                                  </ul>
+                                </li>
+                                </ul>
+                              </li>
+                                <li>Assessoria</li>
+                            </ul>
+                          </li>
+                          <li>Delegados Regionais</li>
+                        </ul>
+                      </li>
+                      <li> Ouvidoria<span>Nome e telefone ou ramal ou link</span></li>
+                      <li>Secretaria de Governança Corporativa<span> Nome e telefone ou ramal ou link</span>
+                        <ul>
+                          <li>Auditoria Interna<span>Nome e telefone ou ramal ou link</span></li>
+                        </ul>
+                      </li>
+                  </ul>
+              </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
