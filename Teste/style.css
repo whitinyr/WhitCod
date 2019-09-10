@@ -1,0 +1,49 @@
+#main {
+
+}
+#topo{
+text-align: center;
+position:relative;
+font-size:40px;
+color:blue;
+background-color:#A52A2A;
+}
+#body {
+
+}
+
+#top {
+width:80%;
+margin:0 auto;
+height:auto;
+}
+#area {
+width:96%;
+}
+#dados {
+width: 15%;
+background-color: grey;
+
+}
+
+#central {
+position:top;
+}
+
+#info {
+margin:auto;
+font-size:40px;
+font-style: italic;
+color:blue;
+}
+#texto {
+margin:0 auto;
+text-align: center;
+width:1000px;
+height:100px;
+color:white;
+}
+
+
+
+
